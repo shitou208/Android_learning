@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Button button1=(Button)findViewById(R.id.button1);
         Button button2=(Button)findViewById(R.id.button2);
+        Button button3=(Button)findViewById(R.id.button3);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -37,6 +38,13 @@ public class MainActivity extends AppCompatActivity {
                 intent2.putExtra("password", "123456");//利用putExtra方法存入要传递的数据
                 startActivityForResult(intent2, 1);//调用startActivityForResult()可以实现跳转之后再回到主界面时返回数据
                                                                   //这样不仅可以“发”数据，还可以"收"数据。1是requestCode，最后在进行收数据时用来区分是从哪个activity返回的
+            }
+        });
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent3=new Intent(MainActivity.this,com.shitou_studio.intent_learning.ThreeActivity.class);//为intent添加执行意图
+                startActivity(intent3);
             }
         });
     }

@@ -13,37 +13,43 @@
         android:textSize="20sp"
         android:textColor="#ff0000"
         android:layout_marginTop="10dp"
+        android:textAllCaps="false"
         />
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:id="@+id/button1"
         android:text="应用内部activity跳转(无数据交互)"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
+        android:textAllCaps="false"
         />
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:id="@+id/button2"
         android:text="应用内部activity跳转(有数据交互)"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
+        android:textAllCaps="false"
         />
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:id="@+id/button3"
-        android:text="应用内部activity跳转(无数据交互)"
+        android:text="使用隐式Intent"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
+        android:textAllCaps="false"
         />
-    <Button
-        android:layout_width="wrap_content"
+    <TextView
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:id="@+id/button4"
-        android:text="应用内部activity跳转(无数据交互)"
         android:layout_gravity="center_horizontal"
+        android:text="通过intent还可以启动后台service，发送broadcast等。在后续学习到service和broadcast时再研究"
+        android:textSize="20sp"
+        android:textColor="#00a6ff"
         android:layout_marginTop="20dp"
+        android:textAllCaps="false"
         />
 </LinearLayout>
