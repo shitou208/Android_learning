@@ -15,5 +15,38 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="多线程文件下载"
+        android:textColor="#d95f26"
+        android:textSize="18sp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/text_title"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_title"
+        android:hint="输入下载地址"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/url_edit"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/url_edit"
+        android:text="开始下载"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/btn_down"
+        />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar1"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:max="100"
+        />
+
 </RelativeLayout>
