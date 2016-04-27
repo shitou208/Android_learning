@@ -38,15 +38,24 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/btn_down"
         />
-
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/btn_down"
+    android:text=""
+    android:id="@+id/text_percent"
+    android:layout_marginTop="20dp"
+    android:layout_centerHorizontal="true"
+    android:textColor="#000000"
+    />
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
         android:id="@+id/progressBar1"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:max="100"
+        android:max="32079963"
         />
 
 </RelativeLayout>

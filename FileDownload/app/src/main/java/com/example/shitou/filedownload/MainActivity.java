@@ -3,6 +3,7 @@ package com.example.shitou.filedownload;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -16,6 +17,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
+import java.math.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,35 +28,41 @@ import java.io.RandomAccessFile;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private Handler handler;
     private DownloadThread mythread  = new DownloadThread();
     private MultiDownloadThread multithread1  = null, multithread2 = null;
     private int fileSize;//文件大小
     private String filePath;//文件路径
     private String filename;//文件名
+    private ProgressBar pro1;
+    private int finish=0;
+    private int a=0,b=0;
+    private int fullsize=-1;
+    private TextView percent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ProgressBar pro1=(ProgressBar)findViewById(R.id.progressBar1);
-        pro1.setProgress(30);
+        pro1=(ProgressBar)findViewById(R.id.progressBar1);
+        percent=(TextView)findViewById(R.id.text_percent);
+        pro1.setProgress(0);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         Button btn_download=(Button)findViewById(R.id.btn_down);
         btn_download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String file_url="http://www.shitou-studio.com/static/storage/258157computer.pdf";
-
+                //String file_url="http://www.shitou-studio.com/static/storage/tessdata/chi_sim.traineddata";
+                //String file_url="http://gdown.baidu.com/data/wisegame/91319a5a1dfae322/baidu_16785426.apk";
                 String filename = file_url.substring(file_url.lastIndexOf("/")+1);;//获取文件名
                 //System.out.println("文件大小："+fileSize);
                 //System.out.println("文件类型："+filename);
                 String filePath = Environment.getExternalStorageDirectory()+"/myfile";//获取文件存放路径
-                //File path=new File(filePath);
-                //if(!path.exists()){//如果该文件夹不存在，则创建
-                //    path.mkdirs();
-               // }
+                File path=new File(filePath);
+                if(!path.exists()){//如果该文件夹不存在，则创建
+                    path.mkdirs();
+               }
                filename=filePath+"/"+filename;
                // RandomAccessFile raf = null;//创建随机读写文件
                /// try {
@@ -65,6 +75,9 @@ public class MainActivity extends AppCompatActivity
                 multithread2=new MultiDownloadThread(handler,file_url,2,file);
                 multithread1.start();
                 multithread2.start();
+
+
+
                 //Toast.makeText(MainActivity.this,"正常显示",Toast.LENGTH_SHORT).show();
                 /*
                 new Thread(){
@@ -181,4 +194,37 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MultiDownloadThread.CURRENTSIZE1:
+                    a=msg.getData().getInt("donesize");
+                    pro1.setProgress(a+b);
+                    float re=((float)a+(float)b)/(float)fullsize;
+                    percent.setText(Math.round(re*100)+"%");
+                    break;
+                case MultiDownloadThread.CURRENTSIZE2:
+                    b=msg.getData().getInt("donesize");
+                    pro1.setProgress(a+b);
+                    float re2=((float)a+(float)b)/(float)fullsize;
+                    percent.setText(Math.round(re2*100)+"%");
+                    break;
+                case MultiDownloadThread.FINISH:
+                    finish=finish+1;
+                    if(finish==2){
+                        Toast.makeText(getApplicationContext(),"下载完成",Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                case MultiDownloadThread.FULLSIZE:
+                    if(fullsize==-1){
+                        fullsize=msg.getData().getInt("fullsize");
+                        pro1.setMax(fullsize);
+                    }
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
+
 }
