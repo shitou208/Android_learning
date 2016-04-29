@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">VersionUpdateDemo</string>
+    <string name="detail">app版本自动更新demo,包括\n1、从服务器检查版本更新情况\n2、解析从服务器获取的json结果\n3、如果有更新，提示用户是否下载\n4、下载更新apk</string>
+</resources>
