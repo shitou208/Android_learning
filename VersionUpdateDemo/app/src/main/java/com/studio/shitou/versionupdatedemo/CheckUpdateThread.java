@@ -31,7 +31,7 @@ public class CheckUpdateThread extends Thread {
     @Override
     public void run() {
         try {
-            URL updateurl = new URL("http://www.shitou-studio.com/app_version_update/api?name=Tumblrdownload&token=h10Z41yLslnov1");
+            URL updateurl = new URL("URL");
             HttpURLConnection conn = (HttpURLConnection) updateurl.openConnection();
             conn.setConnectTimeout(5 * 1000);
             conn.setRequestMethod("GET");
