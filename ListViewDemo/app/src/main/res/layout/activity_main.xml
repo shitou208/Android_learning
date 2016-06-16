@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.studio.shitou.listviewdemo.MainActivity"
+    android:background="#c6d2f4"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    >
+<ListView
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:divider="#0000"
+    android:id="@+id/listview"
+    >
+
+
+</ListView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        >
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="42dp"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:id="@+id/msg_input"
+            android:gravity="left"
+            android:padding="5dp"
+
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:background="@drawable/bg_send_disable"
+            android:text="发 送"
+            android:layout_marginLeft="4dp"
+            android:textColor="#ffffff"
+            android:id="@+id/send"
+            android:enabled="false"
+            android:layout_gravity="center_vertical"
+            android:textSize="13sp"
+            />
+
+    </LinearLayout>
+</LinearLayout>

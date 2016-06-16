@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#c6d2f4"
+    android:orientation="vertical"
+    android:padding="10dp"
+    >
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/left"
+    android:id="@+id/left"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="今天是中国人民坚是我或者是他桌和是他人民坚是我或者是他桌和是他"
+        android:paddingTop="8dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="8dp"
+        android:paddingLeft="18dp"
+        android:textSize="17sp"
+        android:maxWidth="270dp"
+        android:id="@+id/msg_left"
+        />
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/right"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="right"
+        android:id="@+id/right"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="今天是中国人民坚是我或者是他桌和是他人民坚是我或者是他桌和是他"
+            android:paddingTop="8dp"
+            android:paddingRight="18dp"
+            android:paddingBottom="8dp"
+            android:paddingLeft="8dp"
+            android:textSize="17sp"
+            android:maxWidth="270dp"
+            android:id="@+id/msg_right"
+            />
+    </LinearLayout>
+</LinearLayout>
