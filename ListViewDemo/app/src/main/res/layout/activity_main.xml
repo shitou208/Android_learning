@@ -17,7 +17,6 @@
     android:id="@+id/listview"
     >
 
-
 </ListView>
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,6 +26,13 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         >
+        <Button
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:background="@drawable/voice"
+            android:layout_marginRight="5dp"
+            android:id="@+id/btn_changeinputtype"
+            />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,14 +41,25 @@
             android:background="#ffffff"
             android:id="@+id/msg_input"
             android:gravity="left"
-            android:padding="5dp"
-
+            android:layout_gravity="center_vertical"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="42dp"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:id="@+id/btn_voice"
+            android:text="点击进行语音输入"
+            android:textColor="#716e6e"
+            android:layout_gravity="center_vertical"
+            android:visibility="gone"
             />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="42dp"
-            android:background="@drawable/bg_send_disable"
-            android:text="发 送"
+            android:background="@color/disable"
+            android:text="发送"
             android:layout_marginLeft="4dp"
             android:textColor="#ffffff"
             android:id="@+id/send"
