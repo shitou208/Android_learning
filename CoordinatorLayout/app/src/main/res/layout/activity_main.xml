@@ -2,6 +2,7 @@
 <android.support.design.widget.CoordinatorLayout
     android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:background="#ffffff"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
@@ -10,6 +11,7 @@
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme"
+        android:id="@+id/appbarlayout"
         >
 
         <android.support.v7.widget.Toolbar
@@ -19,23 +21,30 @@
             android:background="#0289d2"
             app:layout_scrollFlags="scroll|enterAlways"
             >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="CoordinatorLayout使用详解"
-            android:layout_gravity="center"
-            android:id="@+id/toolbar_title"
-            android:textColor="#ffffff"
-            />
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    >
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@+id/appbarlayout"
+        >
     <android.support.v7.widget.RecyclerView
         android:id="@+id/mRecycleView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
     </android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>
     <android.support.design.widget.FloatingActionButton
     android:id="@+id/fab"
     android:layout_width="wrap_content"
