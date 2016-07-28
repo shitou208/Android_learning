@@ -19,6 +19,22 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imageview;
     private Button button;
 
+    /**************************************
+     * 尝试下面方法，测试是否可以实现不安装openCVmanager即可运行程序
+     * 结论：经测试，用OpenCVLoader.initDebug()替代OpenCVLoader.initAsync()来进行openCV库的初始化
+     * 就可以实现不用安装opencvManager，但要把相应的.so文件拷贝到jinLibs目录
+     ***********************/
+
+    static {
+        if(!OpenCVLoader.initDebug()){
+            //初始化，可以打印日志判断初始化是否成功
+            Log.v("OPENCV","opencv初始化失败");
+        }
+        else {
+            Log.v("OPENCV","opencv初始化成功");
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         //load OpenCV engine and init OpenCV library
-        OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_1_0, getApplicationContext(), mLoaderCallback);
-        Log.i("log", "onResume sucess load OpenCV...");
+       // OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_1_0, getApplicationContext(), mLoaderCallback);
+        //Log.i("log", "onResume sucess load OpenCV...");
     }
 
     // OpenCV库加载并初始化成功后的回调函数
