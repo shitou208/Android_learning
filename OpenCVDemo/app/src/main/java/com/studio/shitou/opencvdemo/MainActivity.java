@@ -18,6 +18,7 @@ import org.opencv.imgproc.Imgproc;
 public class MainActivity extends AppCompatActivity {
     private ImageView imageview;
     private Button button;
+    private static final String TAG="调试信息";
 
     /**************************************
      * 尝试下面方法，测试是否可以实现不安装openCVmanager即可运行程序
@@ -81,18 +82,45 @@ public class MainActivity extends AppCompatActivity {
     public Bitmap rgb2gray(Bitmap rgbBitmap) {
         Mat rgbMat = new Mat();
         Mat grayMat = new Mat();
+        Mat hsvMat= new Mat();
         //srcBitmap = BitmapFactory.decodeResource(getResources(),
              //   R.drawable.nanhuaijin);
         Bitmap grayBitmap = Bitmap.createBitmap(rgbBitmap.getWidth(),
                 rgbBitmap.getHeight(), Bitmap.Config.RGB_565);
+        Bitmap hsvBitmap = Bitmap.createBitmap(rgbBitmap.getWidth(),
+                rgbBitmap.getHeight(), Bitmap.Config.RGB_565);
         Utils.bitmapToMat(rgbBitmap, rgbMat);// convert original bitmap to Mat,
         // R G B.
         Imgproc.cvtColor(rgbMat, grayMat, Imgproc.COLOR_RGB2GRAY);// rgbMat to
+        Imgproc.cvtColor(rgbMat,hsvMat,Imgproc.COLOR_RGB2HSV);
         // gray
         // grayMat
+        //Utils.matToBitmap(hsvMat, grayBitmap); // convert mat to bitmap
+       //打印调试信息
+        int col=hsvMat.cols();
+        int row=hsvMat.rows();
+
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                //rgbMat.put(i,j,new double[]{rgbMat.get(i,j)[0],rgbMat.get(i,j)[1],rgbMat.get(i,j)[2],10});
+                if(hsvMat.get(i,j)[0]>=100){
+                    grayMat.put(i,j,new double[]{255});
+                }
+                else{
+                    grayMat.put(i,j,new double[]{0});
+                }
+                //rgbMat.get(i,j)[2]=100;
+            }
+        }
+
+        //printLog("RGB_mat的(0,0)像素："+rgbMat.get(0,199)[0]+","+rgbMat.get(0,199)[1]+","+rgbMat.get(0,199)[2]+","+rgbMat.get(0,199)[3]);
+        //printLog("hsv_mat的通道："+hsvMat.channels());
         Utils.matToBitmap(grayMat, grayBitmap); // convert mat to bitmap
-       //
-        // Log.i(TAG, "procSrc2Gray sucess...");
+
         return grayBitmap;
+    }
+
+    private void printLog(String msg){
+        Log.v(TAG,msg);
     }
 }

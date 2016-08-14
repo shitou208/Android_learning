@@ -1,0 +1,8 @@
+<resources>
+    <declare-styleable name="LockView">
+        <attr name="titleString" format="string" />
+        <attr name="myDimension" format="dimension" />
+        <attr name="bgColor" format="color" />
+        <attr name="exampleDrawable" format="color|reference" />
+    </declare-styleable>
+</resources>

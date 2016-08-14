@@ -15,6 +15,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.iflytek.cloud.ui.RecognizerDialog;
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
@@ -25,9 +32,12 @@ import com.iflytek.cloud.SpeechRecognizer;
 import com.iflytek.cloud.SpeechUtility;
 import com.iflytek.cloud.ui.RecognizerDialogListener;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private ListView msgListView;
@@ -46,11 +56,16 @@ public class MainActivity extends AppCompatActivity {
     private String shibie_result="";
     //输入模式
     private int inputType=1;//默认为1，1是文本模式，2是语音模式
+
+    private RequestQueue requestQueue=null;
+    private String httpurl= "http://www.tuling123.com/openapi/api";// 请求的地址
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SpeechUtility.createUtility(getApplicationContext(), SpeechConstant.APPID + "=123456");
+        requestQueue= Volley.newRequestQueue(getApplicationContext());
+        SpeechUtility.createUtility(getApplicationContext(), SpeechConstant.APPID + "=57638605");
         // 初始化识别对象
         mAsr = SpeechRecognizer.createRecognizer(MainActivity.this, mInitListener);
         mEngineType = SpeechConstant.TYPE_CLOUD;
@@ -78,7 +93,9 @@ public class MainActivity extends AppCompatActivity {
                 msgList.add(msg);
                 adapter.notifyDataSetChanged();//当有新的消息时，listview将刷新数据显示
                 msgListView.setSelection(msgList.size());//将listview定位到最后一行，显示最新的消息
-                new HttpPostThread(handler, 1, input.getText().toString()).start();
+                //new HttpPostThread(handler, 1, input.getText().toString()).start();
+                //将网络请求放入请求队列中后，volley会自动安排调度，可以放入多个，最多支持？个并发数
+                requestQueue.add(HttpVolley(input.getText().toString()));
                 input.setText("");//将输入框消息清空
             }
         });
@@ -184,7 +201,10 @@ public class MainActivity extends AppCompatActivity {
                     msgListView.setSelection(msgList.size());//将listview定位到最后一行，显示最新的消息
                     shibie_result="";
                     //语音识别完成后，立刻发送该消息
-                    new HttpPostThread(handler, 1, msg.getData().getString("text")).start();
+                    //new HttpPostThread(handler, 1, msg.getData().getString("text")).start();
+                    //将网络请求放入请求队列中后，volley会自动安排调度，可以放入多个，最多支持？个并发数
+                   requestQueue.add(HttpVolley(msg.getData().getString("text")));
+                    //HttpVolley(msg.getData().getString("text"));
                     break;
             }
             super.handleMessage(msg);
@@ -274,5 +294,45 @@ public class MainActivity extends AppCompatActivity {
          }
          return result;
      }
+    //封装一个Post方式的volley请求
+    public StringRequest HttpVolley(final String question){
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,httpurl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        /**对服务器返回的json数据进行解析**/
+                        //JSONArray jsonArray = new JSONArray(jsonresult);
+                        try {
+                            JSONObject res = new JSONObject(response);
+                            String answer=res.getString("text");
+                            Message msg=new Message();
+                            msg.what=1;
+                            Bundle da=new Bundle();
+                            da.putString("response",answer);
+                            msg.setData(da);
+                            handler.sendMessage(msg);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Volley请求出错：", error.getMessage(), error);
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                //在这里设置需要post的参数
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("key", "872d030c8103c53dbaf93be2304c6efb");
+                params.put("info", question);
+                return params;
+            }
+        };
+        return stringRequest;
+    }
 }
 
